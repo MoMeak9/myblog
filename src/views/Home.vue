@@ -1,5 +1,6 @@
 <template>
   <v-container id="home">
+    什么玩意
     <hello-world/>
   </v-container>
 </template>

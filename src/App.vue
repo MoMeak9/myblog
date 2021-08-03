@@ -2,34 +2,75 @@
   <v-app>
     <v-app-bar
         app
+        flat
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Yihui'd Blog</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
+      <v-container class="py-0 fill-height">
+        <v-avatar
+            class="mr-10"
+            color="grey darken-1"
+            size="32"
+        ></v-avatar>
+        <v-btn
+            v-for="link in links"
+            :key="link"
+            text
+        >
+          {{ link }}
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-responsive max-width="260">
+          <v-text-field
+              dense
+              flat
+              hide-details
+              rounded
+              solo-inverted
+          ></v-text-field>
+        </v-responsive>
+      </v-container>
     </v-app-bar>
-    <v-navigation-drawer
-        app
-        v-model="drawer"
-        absolute
-        bottom
-        temporary
-    >
-    </v-navigation-drawer>
-    <v-main>
-      <router-view/>
+    <v-main class="grey lighten-3">
+      <v-container>
+        <v-row>
+          <v-col cols="2">
+            <v-sheet rounded="lg">
+              <v-list color="transparent">
+                <v-list-item
+                    v-for="n in 5"
+                    :key="n"
+                    link
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      List Item {{ n }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider class="my-2">
+
+                </v-divider>
+                <v-list-item
+                    link
+                    color="grey lighten-4"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      Refresh
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-sheet>
+          </v-col>
+          <v-col>
+            <v-sheet>
+              <router-view></router-view>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
       <v-footer>
-        <footer-info></footer-info>
+        <footerInfo></footerInfo>
       </v-footer>
     </v-main>
   </v-app>
@@ -37,23 +78,17 @@
 
 <script>
 import footerInfo from "@/components/layout/footerInfo";
-
 export default {
-  name: 'App',
-
-  data() {
-    return {
-      drawer: false,
-      group: null,
-    }
-  },
-  components: {
+  data: () => ({
+    links: [
+      'Dashboard',
+      'Messages',
+      'Profile',
+      'Updates',
+    ],
+  }),
+  components:{
     footerInfo
-  },
-  watch: {
-    group() {
-      this.drawer = false
-    },
   }
-};
+}
 </script>
