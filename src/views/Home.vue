@@ -1,15 +1,22 @@
 <template>
-  <hello-world />
+  <v-container id="home">
+    <hello-world/>
+  </v-container>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+import HelloWorld from '../components/HelloWorld'
 
-  export default {
-    name: 'Home',
+export default {
+  name: 'Home',
 
-    components: {
-      HelloWorld,
-    },
-  }
+  components: {
+    HelloWorld,
+  },
+}
 </script>
+<style lang="scss" scoped>
+#home {
+  min-height: 100vh;
+}
+</style>
