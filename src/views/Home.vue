@@ -1,23 +1,24 @@
 <template>
   <v-container id="home">
-    什么玩意
-    <hello-world/>
+    <h1>最近文章</h1>
+    <Articles v-for="item in 9" :key="item"></Articles>
   </v-container>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
+import Articles from "@/components/Articles";
 
 export default {
   name: 'Home',
 
   components: {
-    HelloWorld,
+    Articles
   },
 }
 </script>
 <style lang="scss" scoped>
 #home {
+  padding: 1rem;
   min-height: 100vh;
 }
 </style>
