@@ -1,5 +1,6 @@
 <template>
   <div id="footer">
+    <icon></icon>
     <div class="for-me">
       <a v-for="(item,index) in linkList" :title="item.label" :key="index" :href="item.link">{{ item.label }}</a>
     </div>
@@ -13,6 +14,8 @@
 </template>
 
 <script>
+import icon from "@/components/icon";
+
 export default {
   name: "footerInfo",
   data() {
@@ -40,12 +43,15 @@ export default {
         }
       ]
     }
+  }, components: {
+    icon
   }
 }
 </script>
 
 <style scoped lang="scss">
 #footer {
+  background-color: white;
   width: 100%;
   padding: 25px 0 15px;
   text-align: center;

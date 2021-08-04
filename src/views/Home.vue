@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Articles from "@/components/Articles";
+import Articles from "@/components/articlesList";
 
 export default {
   name: 'Home',

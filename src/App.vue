@@ -1,29 +1,34 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
+    <v-navigation-drawer
+        v-model="drawer"
+        app
+    >
+      <personal></personal>
+    </v-navigation-drawer>
     <v-app-bar
         app
         color="white"
         flat
     >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-avatar
           :color="$vuetify.breakpoint.smAndDown ? 'grey darken-1' : 'transparent'"
           size="32"
       ></v-avatar>
-
       <v-tabs
           centered
           class="ml-n9"
           color="grey darken-1"
       >
         <v-tab
-            v-for="link in links"
-            :key="link"
-            :to="link"
+            v-for="item in links"
+            :key="item"
+            :to="item.link"
         >
-          {{ link }}
+          {{ item.label }}
         </v-tab>
       </v-tabs>
-
       <v-avatar
           class="hidden-sm-and-down"
           color="grey darken-1 shrink"
@@ -31,42 +36,13 @@
       ></v-avatar>
     </v-app-bar>
     <v-main class="grey lighten-3">
+      加个轮播图吧 v-if
       <v-container>
-        <v-row>
-          <v-col
-              cols="16"
-          >
-            <v-sheet
-                rounded="lg"
-                min-height="268"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col
-              cols="16"
-              sm="6"
-          >
-            <v-sheet
-                min-height="70vh"
-                rounded="lg"
-            >
-              <router-view></router-view>
-            </v-sheet>
-          </v-col>
-
-          <v-col
-              cols="16"
-          >
-            <v-sheet
-                rounded="lg"
-                min-height="268"
-            >
-              <personal></personal>
-            </v-sheet>
-          </v-col>
-        </v-row>
+        <v-sheet
+            style="margin: 0 auto"
+            :width="width">
+          <router-view></router-view>
+        </v-sheet>
       </v-container>
       <footerInfo></footerInfo>
     </v-main>
@@ -79,16 +55,56 @@ import personal from "@/components/layout/personal";
 
 export default {
   data: () => ({
+    drawer: false,
     links: [
-      'Dashboard',
-      'Messages',
-      'Profile',
-      'Updates',
+      {
+        label: '首页',
+        link: '/'
+      }, {
+        label: '文章归档',
+        link: 'about'
+      }, {
+        label: '碎碎念',
+        link: 'about'
+      }, {
+        label: '项目经历',
+        link: 'about'
+      }, {
+        label: '留言板',
+        link: 'about'
+      }, {
+        label: '关于',
+        link: 'about'
+      }
+// '',
+// 'Messages',
+// 'Profile',
+// 'Updates',
+// 'Updates',
+// 'Updates',
     ],
   }),
   components: {
     footerInfo,
     personal
+  }
+  ,
+  computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
+    width() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return '100%'
+        case 'sm':
+          return '100%'
+        case 'md':
+          return '100%'
+        case 'lg':
+          return '60vw'
+        case 'xl':
+          return '60vw'
+      }
+    }
   }
 }
 </script>
