@@ -36,7 +36,6 @@
       ></v-avatar>
     </v-app-bar>
     <v-main class="grey lighten-3">
-      加个轮播图吧 v-if
       <v-container>
         <v-sheet
             style="margin: 0 auto"
