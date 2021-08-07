@@ -4,6 +4,10 @@
     <div class="for-me">
       <a v-for="(item,index) in linkList" :title="item.label" :key="index" :href="item.link">{{ item.label }}</a>
     </div>
+    <span><v-icon small>mdi-chart-line-stacked</v-icon>23</span>
+    <v-icon small>mdi-coffee</v-icon>
+    <v-icon small>mdi-cursor-default</v-icon>
+    <v-icon small>mdi-eye</v-icon>
     <div>
       © 2021 Yihui's Blog. All Rights Reserved.
     </div>
@@ -41,7 +45,18 @@ export default {
           label: "友情链接",
           link: 'about'
         }
-      ]
+      ],
+      statistics: [
+        {
+          label: '站点字数统计',
+          num: 998,
+          icon: 'mdi-chart-line-stacked'
+        },
+        {
+          label: '站点字数统计',
+          num: 998,
+          icon: 'mdi-chart-line-stacked'
+        }]
     }
   }, components: {
     icon
@@ -58,7 +73,7 @@ export default {
   font-size: 14px;
 
   .for-me {
-    padding: 5px 0 10px;
+    padding: 5px 0 0;
 
     a {
       margin: 0 5px;

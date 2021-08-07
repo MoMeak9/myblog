@@ -63,7 +63,7 @@ request.interceptors.response.use((response) => {
     //         return response.data.body
     //     }
     // }
-    return response.data.body
+    return response.data
 }, errorHandler)
 
 const installer = {

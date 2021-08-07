@@ -36,13 +36,7 @@
       ></v-avatar>
     </v-app-bar>
     <v-main class="grey lighten-3">
-      <v-container>
-        <v-sheet
-            style="margin: 0 auto"
-            :width="width">
-          <router-view></router-view>
-        </v-sheet>
-      </v-container>
+      <router-view></router-view>
       <footerInfo></footerInfo>
     </v-main>
   </v-app>
@@ -75,12 +69,6 @@ export default {
         label: '关于',
         link: 'about'
       }
-// '',
-// 'Messages',
-// 'Profile',
-// 'Updates',
-// 'Updates',
-// 'Updates',
     ],
   }),
   components: {

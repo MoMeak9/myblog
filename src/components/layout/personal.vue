@@ -67,25 +67,216 @@
     </div>
     <v-divider>sss</v-divider>
     <icon></icon>
-    <!--      <v-btn-->
-    <!--          style="margin-right: 5px"-->
-    <!--          depressed-->
-    <!--      >-->
-    <!--        <v-icon>mdi-minus</v-icon>-->
-    <!--        登入-->
-    <!--      </v-btn>-->
-    <v-btn
-        depressed
+    <v-dialog
+        v-model="showSignUp"
+        transition="dialog-bottom-transition"
+        max-width="600"
     >
-      登出
-    </v-btn>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            style="margin-right: 10px"
+            color="success"
+            v-bind="attrs"
+            v-on="on"
+        >登入
+        </v-btn>
+      </template>
+      <template v-slot:default="dialog">
+        <v-card>
+          <v-toolbar
+              color="primary"
+              dark
+          >用户登入 Sign up
+          </v-toolbar>
+          <v-card-text>
+            <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+            >
+              <v-text-field
+                  v-model="email"
+                  :rules="emailRules"
+                  label="邮箱 E-mail"
+                  required
+              ></v-text-field>
+              <v-text-field
+                  v-model="password"
+                  :rules="passwordRules"
+                  label="密码"
+                  required
+              ></v-text-field>
+              <v-btn
+                  :disabled="!valid"
+                  color="success"
+                  class="mr-4"
+                  @click="validateForLogin"
+              >登入 Sign up
+              </v-btn>
+              <v-btn
+                  color="error"
+                  class="mr-4"
+                  @click="reset"
+              >重置 Reset Form
+              </v-btn>
+            </v-form>
+          </v-card-text>
+          <v-card-actions class="justify-end">
+            <v-btn
+                text
+                @click="dialog.value = false;"
+            >Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
+    <v-dialog
+        v-model="showSignIn"
+        transition="dialog-bottom-transition"
+        max-width="600"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            color="primary"
+            v-bind="attrs"
+            v-on="on"
+        >注册
+        </v-btn>
+      </template>
+      <template v-slot:default="dialog">
+        <v-card>
+          <v-toolbar
+              color="primary"
+              dark
+          >注册成为用户 Sign in
+          </v-toolbar>
+          <v-card-text>
+            <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+            >
+              <v-text-field
+                  v-model="name"
+                  :counter="10"
+                  :rules="nameRules"
+                  label="用户名 Nickname"
+                  required
+              ></v-text-field>
+              <v-text-field
+                  v-model="email"
+                  :rules="emailRules"
+                  label="邮箱 E-mail"
+                  required
+              ></v-text-field>
+              <v-text-field
+                  v-model="password"
+                  :rules="passwordRules"
+                  label="密码"
+                  required
+              ></v-text-field>
+              <v-checkbox
+                  v-model="checkbox"
+                  :rules="[v => !!v || 'You must agree to continue!']"
+                  label="遵守本站服务协议?"
+                  required
+              ></v-checkbox>
+              <v-btn
+                  :disabled="!valid"
+                  color="success"
+                  class="mr-4"
+                  @click="validateForRegister"
+              >注册 Sign in
+              </v-btn>
+              <v-btn
+                  color="error"
+                  class="mr-4"
+                  @click="reset"
+              >重置 Reset Form
+              </v-btn>
+            </v-form>
+          </v-card-text>
+          <v-card-actions class="justify-end">
+            <v-btn
+                text
+                @click="dialog.value = false;"
+            >Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
   </div>
 </template>
 <script>
 import icon from "@/components/icon";
+import {register, login} from "@/api/user";
 
 export default {
   name: "personal",
+  data() {
+    return {
+      showSignIn: false,
+      showSignUp: false,
+      valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      checkbox: false,
+      password: '',
+      passwordRules: [
+        v => !!v || 'password is required',
+      ]
+    }
+  },
+  methods: {
+    userRegister() {
+      register({
+        username: this.email,
+        password: this.password,
+        nickname: this.name,
+      }).then(res => {
+        if (res.code === 1) {
+          this.showSignIn = false
+        }
+      })
+    },
+    validateForRegister() {
+      if (this.$refs.form.validate()) {
+        this.userRegister()
+      }
+    },
+    userLogin() {
+      login({
+        username: this.email,
+        password: this.password,
+      }).then(res => {
+        console.log(res)
+        if (res.code === 1) {
+          this.showSignUp = false
+        }
+      })
+    },
+    validateForLogin() {
+      if (this.$refs.form.validate()) {
+        this.userLogin()
+      }
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation()
+    },
+  },
   components: {
     icon
   }
