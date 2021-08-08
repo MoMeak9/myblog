@@ -71,12 +71,22 @@ export default {
       }
     ],
   }),
+  created() {
+    // 在页面加载时读取sessionStorage 是存储在相关对象，而不是单独存储
+    if (localStorage.getItem('store')) {
+      this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(localStorage.getItem('store'))))
+    }
+    // 在页面刷新时将store保存到sessionStorage里
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('store', JSON.stringify(this.$store.state))
+    })
+  },
   components: {
     footerInfo,
     personal
-  }
-  ,
+  },
   computed: {
+    // 改为全局计算属性
     // eslint-disable-next-line vue/return-in-computed-property
     width() {
       switch (this.$vuetify.breakpoint.name) {

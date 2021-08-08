@@ -4,10 +4,22 @@
     <div class="for-me">
       <a v-for="(item,index) in linkList" :title="item.label" :key="index" :href="item.link">{{ item.label }}</a>
     </div>
-    <span><v-icon small>mdi-chart-line-stacked</v-icon>23</span>
-    <v-icon small>mdi-coffee</v-icon>
-    <v-icon small>mdi-cursor-default</v-icon>
-    <v-icon small>mdi-eye</v-icon>
+    <v-tooltip bottom v-for="item in statistics" :key=item>
+      <template v-slot:activator="{ on, attrs }">
+        <span>{{ item.num }}</span>
+        <v-icon
+            style="margin: 0 4px 0 10px"
+            color="primary"
+            small
+            dark
+            v-bind="attrs"
+            v-on="on"
+        >
+          {{ item.icon }}
+        </v-icon>
+      </template>
+      <span>{{ item.label }}</span>
+    </v-tooltip>
     <div>
       © 2021 Yihui's Blog. All Rights Reserved.
     </div>
@@ -53,10 +65,21 @@ export default {
           icon: 'mdi-chart-line-stacked'
         },
         {
-          label: '站点字数统计',
+          label: '站点访问统计',
           num: 998,
-          icon: 'mdi-chart-line-stacked'
-        }]
+          icon: 'mdi-cursor-default'
+        },
+        {
+          label: '站点文章浏览',
+          num: 998,
+          icon: 'mdi-eye'
+        },
+        {
+          label: '站点持续时间',
+          num: 998,
+          icon: 'mdi-coffee'
+        }
+      ]
     }
   }, components: {
     icon
@@ -68,12 +91,13 @@ export default {
 #footer {
   background-color: white;
   width: 100%;
+  margin-top: 40px;
   padding: 25px 0 15px;
   text-align: center;
   font-size: 14px;
 
   .for-me {
-    padding: 5px 0 0;
+    padding: 5px 0 10px;
 
     a {
       margin: 0 5px;
