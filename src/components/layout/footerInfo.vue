@@ -75,14 +75,32 @@ export default {
           icon: 'mdi-eye'
         },
         {
-          label: '站点持续时间',
+          label: '风里雨里运行了',
           num: 998,
           icon: 'mdi-coffee'
         }
       ]
     }
-  }, components: {
+  },
+  methods: {
+    initData() {
+      setInterval(() => {
+        let BootDate = new Date("2021/07/25 00:00:00");
+        let NowDate = new Date();
+        let RunDateM = parseInt(NowDate - BootDate);
+        let RunDays = Math.floor(RunDateM / (24 * 3600 * 1000));
+        let RunHours = Math.floor(RunDateM % (24 * 3600 * 1000) / (3600 * 1000));
+        let RunMinutes = Math.floor(RunDateM % (24 * 3600 * 1000) % (3600 * 1000) / (60 * 1000));
+        let RunSeconds = Math.round(RunDateM % (24 * 3600 * 1000) % (3600 * 1000) % (60 * 1000) / 1000);
+        this.statistics[3].num = RunDays + "天" + RunHours + "时" + RunMinutes + "分" + RunSeconds + "秒"
+      }, 1000)
+    }
+  },
+  components: {
     icon
+  },
+  mounted() {
+    this.initData()
   }
 }
 </script>

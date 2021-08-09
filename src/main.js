@@ -4,7 +4,10 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import VueParticles from 'vue-particles'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 Vue.use(VueParticles)
+Vue.use(mavonEditor)
 Vue.config.productionTip = false
 
 new Vue({
