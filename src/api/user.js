@@ -7,6 +7,7 @@ import config from '@/config'
 const api = {
     login: "/api/user/login",
     register:"/api/user/register",
+    getUserInfo:"/api/user/getUserInfo",
 }
 
 export function login(param) {
@@ -26,3 +27,12 @@ export function register(param) {
         data: param
     })
 }
+export function getUserInfo(param) {
+    return request({
+        requestConfig: config.requestConfig.nodejsServer,
+        url: api.getUserInfo,
+        method: 'post',
+        data: param
+    })
+}
+

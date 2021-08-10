@@ -227,15 +227,44 @@
         </v-card>
       </template>
     </v-dialog>
+    <v-dialog
+        v-model="dialog"
+        width="500"
+    >
+      <v-card>
+        <v-card-title class="text-h5 red lighten-2">
+          错误！{{ text }}
+        </v-card-title>
+
+        <v-card-text>
+          {{ text }}，请再次检查您所填的内容
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="primary"
+              text
+              @click="dialog = false"
+          >
+            关闭
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
-import {register, login} from "@/api/user";
+import {register, login,getUserInfo} from "@/api/user";
 
 export default {
   name: "personal",
   data() {
     return {
+      dialog: false,
+      text: '',
       showSignIn: false,
       showSignUp: false,
       selectedItem: 0,
@@ -291,6 +320,13 @@ export default {
         console.log(res)
         if (res.code === 1) {
           this.showSignUp = false
+          this.$store.state.token = res.token
+          getUserInfo({}).then(res => {
+            console.log(res)
+          })
+        } else {
+          this.dialog = true
+          this.text = res.msg
         }
       })
     },
@@ -306,8 +342,7 @@ export default {
       this.$refs.form.resetValidation()
     },
   },
-  components: {
-  }
+  components: {}
 }
 </script>
 

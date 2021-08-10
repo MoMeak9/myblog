@@ -20,9 +20,9 @@ const routes = [
         component: () => import('@/views/Article')
     },
     {
-        path: '/manager',
-        name: 'manager',
-        component: () => import('@/views/manager/NewArticle')
+        path: '/editor',
+        name: 'editor',
+        component: () => import('@/views/manager/EditArticle')
     },
     {
         path: '/personal',

@@ -2,8 +2,8 @@
  * Created by Yihui_Shi on 2021/8/3 23:11
  */
 import axios from 'axios'
-// import { Message } from 'element-ui'
 import {VueAxios} from './axios'
+import store from '../store'
 // import crypt from './AESUtils'
 
 // let isEncrypt = false
@@ -40,6 +40,9 @@ request.interceptors.request.use(config => {
         // } else {
         //     isEncrypt = false
         // }
+        if(store.state.token){
+            config.headers['Authorization']= `Bearer ${store.state.token}`
+        }
     }
     return config
 }, errorHandler)
