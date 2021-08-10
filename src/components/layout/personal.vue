@@ -10,7 +10,7 @@
       >
     </v-avatar>
     <h3>sss</h3>
-    <span>sssssss</span>
+    <span>sss</span>
     <div>
       <v-chip
           class="ma-2"
@@ -74,8 +74,8 @@
           color="primary"
       >
         <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
+            v-for="(item) in items"
+            :key="item.text"
         >
           <v-list-item-icon>
             <v-icon v-text="item.icon"></v-icon>

@@ -69,13 +69,10 @@
             :search="search"
         >
           <template v-slot:item.calories="{ item }">
-            <v-chip
-                dark
+            <v-btn
+                outlined
             >
               {{ item.calories }}
-            </v-chip>
-            <v-btn
-            >ddd
             </v-btn>
           </template>
         </v-data-table>

@@ -22,7 +22,12 @@ const routes = [
     {
         path: '/manager',
         name: 'manager',
-        component: () => import('@/views/ManagerCenter')
+        component: () => import('@/views/manager/NewArticle')
+    },
+    {
+        path: '/personal',
+        name: 'personal',
+        component: () => import('@/views/PersonalCenter')
     }
 ]
 
