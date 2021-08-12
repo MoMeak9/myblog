@@ -59,6 +59,7 @@
 </template>
 
 <script>
+
 export default {
   name: "PersonalCenter",
   data() {
@@ -71,7 +72,8 @@ export default {
       console.log(file)
       this.imageFile = file
     }
-  }
+  },
+
 }
 </script>
 

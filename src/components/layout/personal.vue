@@ -11,60 +11,8 @@
     </v-avatar>
     <h3>sss</h3>
     <span>sss</span>
-    <div>
-      <v-chip
-          class="ma-2"
-          label
-      >
-        Label
-      </v-chip>
-      <v-chip
-          class="ma-2"
-          color="pink"
-          label
-          text-color="white"
-      >
-        <v-icon left>
-          mdi-label
-        </v-icon>
-        Tags
-      </v-chip>
-
-      <v-chip
-          class="ma-2"
-          color="primary"
-          label
-      >
-        <v-icon left>
-          mdi-account-circle-outline
-        </v-icon>
-        John Leider
-      </v-chip>
-
-      <v-chip
-          class="ma-2"
-          color="pink"
-          label
-          text-color="white"
-      >
-        <v-icon left>
-          mdi-label
-        </v-icon>
-        Tags
-      </v-chip>
-
-      <v-chip
-          class="ma-2"
-          color="primary"
-          label
-      >
-        <v-icon left>
-          mdi-account-circle-outline
-        </v-icon>
-        John Leider
-      </v-chip>
-    </div>
-    <v-divider>sss</v-divider>
+    <v-divider style="margin-top: 20px"
+    ></v-divider>
     <!--    菜单-->
     <v-list
         nav
@@ -76,6 +24,7 @@
         <v-list-item
             v-for="(item) in items"
             :key="item.text"
+            :to="item.link"
         >
           <v-list-item-icon>
             <v-icon v-text="item.icon"></v-icon>
@@ -91,6 +40,8 @@
         v-model="showSignUp"
         transition="dialog-bottom-transition"
         max-width="600"
+        persistent
+        v-if="!token"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -144,7 +95,7 @@
           <v-card-actions class="justify-end">
             <v-btn
                 text
-                @click="dialog.value = false;"
+                @click="dialog.value = false;reset()"
             >Close
             </v-btn>
           </v-card-actions>
@@ -155,6 +106,7 @@
         v-model="showSignIn"
         transition="dialog-bottom-transition"
         max-width="600"
+        v-if="!token"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -254,10 +206,17 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-btn
+        color="primary"
+        @click="loginOut"
+        v-if="token">
+      登出
+    </v-btn>
   </div>
 </template>
 <script>
-import {register, login,getUserInfo} from "@/api/user";
+import {register, login, getUserInfo} from "@/api/user";
+import {mapGetters} from "vuex";
 
 export default {
   name: "personal",
@@ -268,14 +227,7 @@ export default {
       showSignIn: false,
       showSignUp: false,
       selectedItem: 0,
-      items: [
-        {text: 'My Files', icon: 'mdi-folder'},
-        {text: 'Shared with me', icon: 'mdi-account-multiple'},
-        {text: 'Starred', icon: 'mdi-star'},
-        {text: 'Recent', icon: 'mdi-history'},
-        {text: 'Offline', icon: 'mdi-check-circle'},
-        {text: 'Uploads', icon: 'mdi-upload'},
-        {text: 'Backups', icon: 'mdi-cloud-upload'},
+      items: [{}
       ],
       valid: true,
       name: '',
@@ -295,6 +247,11 @@ export default {
       ]
     }
   },
+  mounted() {
+    if(this.$store.state.items){
+      this.items =this.$store.state.items
+    }
+  },
   methods: {
     userRegister() {
       register({
@@ -304,6 +261,7 @@ export default {
       }).then(res => {
         if (res.code === 1) {
           this.showSignIn = false
+          this.showSignUp = true
         }
       })
     },
@@ -317,12 +275,12 @@ export default {
         username: this.email,
         password: this.password,
       }).then(res => {
-        console.log(res)
         if (res.code === 1) {
           this.showSignUp = false
           this.$store.state.token = res.token
           getUserInfo({}).then(res => {
-            console.log(res)
+            this.$store.state.items = res.data.menuItems
+            this.items = res.data.menuItems
           })
         } else {
           this.dialog = true
@@ -341,8 +299,14 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation()
     },
+    loginOut() {
+      this.$store.commit('loginOut')
+    }
   },
-  components: {}
+  components: {},
+  computed: {
+    ...mapGetters(['token'])
+  }
 }
 </script>
 

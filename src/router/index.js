@@ -25,9 +25,24 @@ const routes = [
         component: () => import('@/views/manager/EditArticle')
     },
     {
+        path: '/manager',
+        name: 'manager',
+        component: () => import('@/views/manager/MyArticle')
+    },
+    {
         path: '/personal',
         name: 'personal',
         component: () => import('@/views/PersonalCenter')
+    },
+    {
+        path: '/comment',
+        name: 'comment',
+        component: () => import('@/views/manager/ReceiveComment')
+    },
+    {
+        path: '/classify',
+        name: 'classify',
+        component: () => import('@/views/Classify')
     }
 ]
 

@@ -31,7 +31,7 @@ export function getUserInfo(param) {
     return request({
         requestConfig: config.requestConfig.nodejsServer,
         url: api.getUserInfo,
-        method: 'post',
+        method: 'get',
         data: param
     })
 }
