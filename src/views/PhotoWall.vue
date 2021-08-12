@@ -1,5 +1,7 @@
 <template>
+<div id="photoWall">
 
+</div>
 </template>
 
 <script>
