@@ -12,10 +12,11 @@
         flat
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-avatar
-          :color="$vuetify.breakpoint.smAndDown ? 'grey darken-1' : 'transparent'"
+      <v-btn
+          :color="$vuetify.breakpoint.smAndDown ? '' : 'transparent'"
           size="32"
-      ></v-avatar>
+          icon
+      ><v-icon>mdi-google-translate</v-icon></v-btn>
       <v-tabs
           centered
           class="ml-n9"
@@ -29,6 +30,11 @@
           {{ item.label }}
         </v-tab>
       </v-tabs>
+      <v-btn
+          :color="$vuetify.breakpoint.smAndDown ? 'transparent' : ''"
+          size="32"
+          icon
+      ><v-icon>mdi-google-translate</v-icon></v-btn>
     </v-app-bar>
     <v-main class="grey lighten-3">
       <router-view></router-view>

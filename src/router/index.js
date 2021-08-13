@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import EditArticle from "@/views/manager/EditArticle";
+import MyArticle from "@/views/manager/MyArticle";
+import WebSideData from "@/views/manager/WebSideData";
+import ReceiveComment from "@/views/manager/ReceiveComment";
 
 Vue.use(VueRouter)
 
@@ -20,14 +24,26 @@ const routes = [
         component: () => import('@/views/Article')
     },
     {
-        path: '/editor',
-        name: 'editor',
-        component: () => import('@/views/manager/EditArticle')
-    },
-    {
         path: '/manager',
-        name: 'manager',
-        component: () => import('@/views/manager/MyArticle')
+        component: () => import('@/views/manager'),
+        children: [
+            {
+                path: 'edit',
+                component: EditArticle
+            },
+            {
+                path: 'my',
+                component: MyArticle
+            },
+            {
+                path: 'website',
+                component: WebSideData
+            },
+            {
+                path: 'comment',
+                component: ReceiveComment
+            }
+        ]
     },
     {
         path: '/personal',
@@ -35,15 +51,11 @@ const routes = [
         component: () => import('@/views/PersonalCenter')
     },
     {
-        path: '/comment',
-        name: 'comment',
-        component: () => import('@/views/manager/ReceiveComment')
-    },
-    {
         path: '/classify',
         name: 'classify',
         component: () => import('@/views/Classify')
     }
+
 ]
 
 const router = new VueRouter({

@@ -17,6 +17,7 @@ export default new Vuex.Store({
         loginOut() {
             this.state.token = ''
             this.state.items = ''
+            this.state.userInfo = ''
         }
     },
     actions: {},

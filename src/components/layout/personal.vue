@@ -1,22 +1,32 @@
 <template>
   <div id="personal">
     <v-avatar
-        color="orange"
+        color="indigo"
         size="100"
     >
+      <v-icon dark v-if="!this.$store.state.userInfo.head_img"
+              large>
+        mdi-account-circle
+      </v-icon>
       <img
-          src="https://cdn.vuetifyjs.com/images/john.jpg"
-          alt="John"
+          v-else
+          :src="this.$store.state.userInfo.head_img"
+          alt=""
       >
     </v-avatar>
-    <h3>sss</h3>
-    <span>sss</span>
-    <v-divider style="margin-top: 20px"
+    <h3>{{ this.$store.state.userInfo.nickname }}</h3>
+    <span>{{ this.$store.state.userInfo.intro }}</span>
+    <v-divider style="margin: 20px 0 20px"
     ></v-divider>
+    <div class="insertImage" v-if="!token">
+      你还没登入哦？
+      <br>没账号的话可以考虑注册一下？
+    </div>
     <!--    菜单-->
     <v-list
         nav
         dense
+        v-if="token"
     >
       <v-list-item-group
           color="primary"
@@ -244,12 +254,13 @@ export default {
       password: '',
       passwordRules: [
         v => !!v || 'password is required',
-      ]
+      ],
+      head_img: ''
     }
   },
   mounted() {
-    if(this.$store.state.items){
-      this.items =this.$store.state.items
+    if (this.$store.state.items) {
+      this.items = this.$store.state.items
     }
   },
   methods: {
@@ -281,6 +292,11 @@ export default {
           getUserInfo({}).then(res => {
             this.$store.state.items = res.data.menuItems
             this.items = res.data.menuItems
+            this.$store.state.userInfo = {
+              ...res.data,
+              menuItems: res.data.menuItems
+            }
+            this.head_img = res.data.head_img
           })
         } else {
           this.dialog = true
@@ -301,11 +317,12 @@ export default {
     },
     loginOut() {
       this.$store.commit('loginOut')
+      location.reload()
     }
   },
   components: {},
   computed: {
-    ...mapGetters(['token'])
+    ...mapGetters(['token', 'userInfo'])
   }
 }
 </script>
@@ -314,5 +331,12 @@ export default {
 #personal {
   padding: 20px 0 20px;
   text-align: center;
+
+  .insertImage {
+    background: url("~@/assets/insertImage/tired.png") center center no-repeat;
+    background-size: 200px;
+    width: 100%;
+    height: 300px;
+  }
 }
 </style>
