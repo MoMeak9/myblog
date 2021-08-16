@@ -92,13 +92,13 @@
                   color="success"
                   class="mr-4"
                   @click="validateForLogin"
-              >登入 Sign up
+              >登入
               </v-btn>
               <v-btn
                   color="error"
                   class="mr-4"
                   @click="reset"
-              >重置 Reset Form
+              >重置
               </v-btn>
             </v-form>
           </v-card-text>
@@ -106,7 +106,7 @@
             <v-btn
                 text
                 @click="dialog.value = false;reset()"
-            >Close
+            ><v-icon color="red">mdi-close-box</v-icon>Close
             </v-btn>
           </v-card-actions>
         </v-card>

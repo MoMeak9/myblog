@@ -6,7 +6,7 @@ export default {
     requestConfig: {
         nodejsServer: {
             dev: ' http://127.0.0.1:3000',
-            prod: 'https://service-a7nqbmoc-1259409954.gz.apigw.tencentcs.com/release',
+            prod: 'https://app.yihuiblog.top/server',
         }
     },
 //    其他配置属性

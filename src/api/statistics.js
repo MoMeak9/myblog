@@ -1,5 +1,5 @@
 /**
- * Created by Yihui_Shi on 2021/8/7 14:00
+ * 站点统计接口
  */
 import request from '@/utils/request'
 import config from '@/config'

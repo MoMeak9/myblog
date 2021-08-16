@@ -28,7 +28,7 @@ const routes = [
         component: () => import('@/views/manager'),
         children: [
             {
-                path: 'edit',
+                path: 'editor',
                 component: EditArticle
             },
             {
@@ -59,7 +59,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'history', // ServeLess 支持，配置Nginx需要正向代理
     routes
 })
 

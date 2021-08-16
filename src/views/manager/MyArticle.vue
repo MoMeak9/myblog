@@ -2,12 +2,6 @@
   <div id="myArticle">
     <v-card>
       <h3>
-        <v-icon>mdi-tag</v-icon>
-        标签管理
-      </h3>
-    </v-card>
-    <v-card>
-      <h3>
         <v-icon>mdi-book-open-page-variant</v-icon>
         文章管理
       </h3>
@@ -25,15 +19,35 @@
         </v-card-title>
         <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="tableData"
             :search="search"
+            :sort-desc="[false, true]"
         >
-          <template v-slot:item.calories="{ item }">
-            <v-btn
-                outlined
-            >
-              {{ item.calories }}
-            </v-btn>
+          <template v-slot:item.actions="{ item }">
+            <v-btn tile dark small v-if="item.state !== 0" color="green">发布</v-btn>
+            <v-btn tile dark small color="blue">编辑</v-btn>
+            <v-btn tile dark small v-if="item.state === 0" color="grey">下架</v-btn>
+            <v-btn tile dark small color="red">彻底删除</v-btn>
+          </template>
+          <template v-slot:item.state="{ item }">
+            <v-chip
+                dark
+                color="green"
+                v-if="item.state === 0"
+            ><span>正常</span>
+            </v-chip>
+            <v-chip
+                dark
+                color="red"
+                v-if="item.state === 1"
+            ><span>草稿</span>
+              <v-chip
+                  dark
+                  color="red"
+                  v-if="item.state === -1"
+              ><span>下线</span>
+              </v-chip>
+            </v-chip>
           </template>
         </v-data-table>
       </v-card>
@@ -42,6 +56,8 @@
 </template>
 
 <script>
+import {queryAllArticle} from "@/api/articles";
+
 export default {
   name: "MyArticle",
   data() {
@@ -49,100 +65,35 @@ export default {
       search: '',
       items: ['Streaming', 'Eating'],
       headers: [
-        {
-          text: 'Dessert (100g serving)',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
-        {text: 'Calories', value: 'calories'},
-        {text: 'Fat (g)', value: 'fat'},
-        {text: 'Carbs (g)', value: 'carbs'},
-        {text: 'Protein (g)', value: 'protein'},
-        {text: 'Iron (%)', value: 'iron'},
+        {text: '标题', value: 'title'},
+        {text: '文章状态', value: 'state'},
+        {text: '操作', value: 'actions', sortable: false},
+        {text: '简介', value: 'synopsis'},
+        {text: '标签', value: 'tag'},
+        {text: '被浏览次数', value: 'reading_times'},
+        {text: '点赞数', value: 'praise_times'},
+        {text: '发布时间', value: 'create_time'},
       ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%',
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%',
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%',
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%',
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%',
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%',
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%',
-        },
-      ]
+      tableData: []
+    }
+  },
+  method: {
+    queryTableData() {
+      queryAllArticle({}).then((res) => {
+        console.log(res)
+      })
+    },
+  },
+  mounted() {
+    if (!this.$store.state.userInfo) {
+      this.$router.push({
+        path: "/",
+      })
+    } else {
+      queryAllArticle({}).then((res) => {
+        console.log(res)
+        this.tableData = res.data
+      })
     }
   }
 }
