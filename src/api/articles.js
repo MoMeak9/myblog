@@ -7,7 +7,6 @@ import config from '@/config'
 const api = {
     add: "/api/article/add",
     allList: "/api/article/allList",
-    myList: "/api/article/myList",
     detail: "/api/article/detail", // 获取博客详情接口
     update: "/api/article/update", // 更新博客接口
     delete: "/api/article/delete",
