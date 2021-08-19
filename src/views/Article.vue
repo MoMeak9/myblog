@@ -1,5 +1,5 @@
 <template>
-  <v-container id="articles">
+  <v-container id="article">
     <v-sheet>
       <h1>标题</h1>
       <div>
@@ -14,7 +14,7 @@
         </v-chip>
       </div>
       <div>
-        <v-tooltip bottom v-for="item in statistics" :key=item>
+        <v-tooltip bottom v-for="(item,index) in statistics" :key=index>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
                 style="margin: 0 4px 0 10px"
@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-#articles {
+#article {
   min-height: 100vh;
   text-align: center;
 

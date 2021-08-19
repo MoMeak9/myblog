@@ -32,8 +32,8 @@
           color="primary"
       >
         <v-list-item
-            v-for="(item) in items"
-            :key="item.text"
+            v-for="(item,index) in items"
+            :key="index"
             :to="item.link"
         >
           <v-list-item-icon>
@@ -82,10 +82,13 @@
                   required
               ></v-text-field>
               <v-text-field
+                  type="password"
+                  :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                   v-model="password"
                   :rules="passwordRules"
                   label="密码"
                   required
+                  @click:append="show = !show"
               ></v-text-field>
               <v-btn
                   :disabled="!valid"
@@ -106,7 +109,9 @@
             <v-btn
                 text
                 @click="dialog.value = false;reset()"
-            ><v-icon color="red">mdi-close-box</v-icon>Close
+            >
+              <v-icon color="red">mdi-close-box</v-icon>
+              Close
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -237,25 +242,25 @@ export default {
       showSignIn: false,
       showSignUp: false,
       selectedItem: 0,
-      items: [{}
-      ],
+      items: [],
       valid: true,
       name: '',
       nameRules: [
-        v => !!v || 'Name is required',
+        v => !!v || '我们应该称呼你？',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
       ],
       email: '',
       emailRules: [
-        v => !!v || 'E-mail is required',
+        v => !!v || '填一下邮箱嘛',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
       checkbox: false,
       password: '',
       passwordRules: [
-        v => !!v || 'password is required',
+        v => !!v || '密码很重要',
       ],
-      head_img: ''
+      head_img: '',
+      show: false
     }
   },
   mounted() {

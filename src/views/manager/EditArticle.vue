@@ -2,15 +2,17 @@
   <div id="manager">
     <v-card>
       <h3>发布新的文章</h3>
-      <v-text-field
-          label="文章标题"
-          placeholder="文章标题"
-          prepend-inner-icon="mdi-map-marker"
-          outlined
-          dense
-          v-model="title"
-          :rules="titleRule"
-      ></v-text-field>
+      <div style="display: flex">
+        <v-text-field
+            label="文章标题"
+            placeholder="文章标题"
+            prepend-inner-icon="mdi-map-marker"
+            outlined
+            dense
+            v-model="title"
+            :rules="titleRule"
+        ></v-text-field>
+      </div>
       <v-textarea
           v-model="synopsis"
           label="文章简介"
@@ -23,7 +25,7 @@
           :items="chips"
           chips
           clearable
-          label="文章分类"
+          label="文章标签"
           multiple
           prepend-inner-icon="mdi-map-marker"
           outlined
@@ -41,8 +43,19 @@
           </v-chip>
         </template>
       </v-combobox>
-      <mavon-editor v-model="contents" style="min-height: 50vh;z-index: 0"/>
-      <v-card-actions>
+      <v-card-actions style="padding: 0">
+        <v-select
+            prepend-inner-icon="mdi-map-marker"
+            :items="items"
+            label="分类"
+            outlined
+        ></v-select>
+        <v-select
+            prepend-inner-icon="mdi-map-marker"
+            :items="subItems"
+            label="二级分类"
+            outlined
+        ></v-select>
         <v-spacer></v-spacer>
         <v-btn color="success" @click="issue">
           发布
@@ -51,6 +64,7 @@
           暂存草稿箱
         </v-btn>
       </v-card-actions>
+      <mavon-editor v-model="contents" style="min-height: 90vh;z-index: 0"/>
     </v-card>
     <v-snackbar
         v-model="show"
@@ -92,6 +106,8 @@ export default {
       synopsisRule: [
         value => !!value || '必填.',
       ],
+      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+      subItems: ['sss', 'ssss', 998]
     }
   },
   methods: {

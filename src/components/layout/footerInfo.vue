@@ -4,7 +4,7 @@
     <div class="for-me">
       <a v-for="(item,index) in linkList" :title="item.label" :key="index" :href="item.link">{{ item.label }}</a>
     </div>
-    <v-tooltip bottom v-for="item in statistics" :key=item>
+    <v-tooltip bottom v-for="(item,index) in statistics" :key=index>
       <template v-slot:activator="{ on, attrs }">
         <span>{{ item.num }}</span>
         <v-icon

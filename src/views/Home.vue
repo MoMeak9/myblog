@@ -1,21 +1,51 @@
 <template>
   <v-container id="home">
-    <v-sheet class="article-list">
-      <h1>最近文章</h1>
-      <Articles v-for="item in 9" :key="item"></Articles>
-    </v-sheet>
+    <v-row justify="center">
+      <v-col :cols="$vuetify.breakpoint.xs?0:3"
+             v-if="!$vuetify.breakpoint.xs"
+      >
+        <classify-menu></classify-menu>
+      </v-col>
+      <v-col :cols="$vuetify.breakpoint.xs?0:8"
+             offset-sm="0">
+        <v-sheet class="article-list">
+          <h1>最近文章</h1>
+          <div v-for="item in allArticles" :key="item.id">
+            <articles-item :item="item"></articles-item>
+          </div>
+        </v-sheet>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-import Articles from "@/components/article/articlesList";
+import articlesItem from "@/components/article/articlesItem";
+import classifyMenu from "@/components/layout/classifyMenu";
+import {queryAllArticle} from "@/api/articles";
 
 export default {
   name: 'Home',
-
-  components: {
-    Articles
+  data() {
+    return {
+      allArticles: []
+    }
   },
+  components: {
+    articlesItem,
+    classifyMenu
+  },
+  methods: {
+    queryAllArticle() {
+      queryAllArticle({}).then((res) => {
+        this.allArticles = res.data
+        console.log(res)
+      })
+    }
+  },
+  mounted() {
+    this.queryAllArticle()
+  }
 }
 </script>
 <style lang="scss" scoped>

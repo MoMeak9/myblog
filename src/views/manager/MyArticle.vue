@@ -78,11 +78,13 @@ export default {
     }
   },
   method: {
+    // 查询
     queryTableData() {
       queryAllArticle({}).then((res) => {
         console.log(res)
       })
     },
+    //  文章状态更改
   },
   mounted() {
     if (!this.$store.state.userInfo) {

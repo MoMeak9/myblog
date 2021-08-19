@@ -10,6 +10,7 @@ const api = {
     detail: "/api/article/detail", // 获取博客详情接口
     update: "/api/article/update", // 更新博客接口
     delete: "/api/article/delete",
+    allArticle:"/api/article/allArticle"
 }
 export function addArticle(param) {
     return request({
@@ -23,7 +24,7 @@ export function addArticle(param) {
 export function queryAllArticle(param) {
     return request({
         requestConfig: config.requestConfig.nodejsServer,
-        url: api.allList,
+        url: api.allArticle,
         method: 'post',
         data: param
     })

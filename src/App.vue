@@ -23,8 +23,8 @@
           color="grey darken-1"
       >
         <v-tab
-            v-for="item in links"
-            :key="item"
+            v-for="(item,index) in links"
+            :key="index"
             :to="item.link"
         >
           {{ item.label }}
