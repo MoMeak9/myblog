@@ -10,8 +10,10 @@ const api = {
     detail: "/api/article/detail", // 获取博客详情接口
     update: "/api/article/update", // 更新博客接口
     delete: "/api/article/delete",
-    allArticle:"/api/article/allArticle"
+    allArticle: "/api/article/allArticle",
+    classify: '/api/article/classify'
 }
+
 export function addArticle(param) {
     return request({
         requestConfig: config.requestConfig.nodejsServer,
@@ -26,6 +28,15 @@ export function queryAllArticle(param) {
         requestConfig: config.requestConfig.nodejsServer,
         url: api.allArticle,
         method: 'post',
+        data: param
+    })
+}
+
+export function queryAllArticleByClass(param) {
+    return request({
+        requestConfig: config.requestConfig.nodejsServer,
+        url: api.classify,
+        method: 'get',
         data: param
     })
 }

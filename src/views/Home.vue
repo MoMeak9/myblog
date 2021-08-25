@@ -4,7 +4,7 @@
       <v-col :cols="$vuetify.breakpoint.xs?0:3"
              v-if="!$vuetify.breakpoint.xs"
       >
-        <classify-menu></classify-menu>
+        <classify-menu :classItem="classItem"></classify-menu>
       </v-col>
       <v-col :cols="$vuetify.breakpoint.xs?0:8"
              offset-sm="0">
@@ -28,7 +28,8 @@ export default {
   name: 'Home',
   data() {
     return {
-      allArticles: []
+      allArticles: [],
+      classItem: []
     }
   },
   components: {
@@ -38,7 +39,8 @@ export default {
   methods: {
     queryAllArticle() {
       queryAllArticle({}).then((res) => {
-        this.allArticles = res.data
+        this.allArticles = res.data.allArticle
+        this.classItem = res.data.classify
         console.log(res)
       })
     }

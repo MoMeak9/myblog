@@ -2,35 +2,57 @@
   <v-container id="classify">
     <v-card class="d-flex flex-wrap justify-space-around ">
       <v-card
-          v-for="n in 10"
-          :key="n"
+          v-for="(item,index) in articleByClass"
+          :key="index"
           outlined
           tile
           style="width: 400px;margin-top: 10px"
+          to="/"
       >
-        <h4>类别</h4>
+        <h4>{{ item.className }} <span style="float: right">({{ item.num }})</span></h4>
       </v-card>
     </v-card>
-    <div v-for="n in 10" :key="n" style="margin:10px 0 0" class="transparent">
-      <v-card-title>
+    <div v-for="(item,index) in articleByDate" :key="index" style="margin:10px 0 0" class="transparent">
+      <v-card-title v-if="item.articleList.length > 0">
         <span>
           <v-icon>
             mdi-file-document
           </v-icon>
-          2333
+          {{ item.month }} ({{ item.articleList.length }})
         </span>
       </v-card-title>
-      <v-card-actions v-for="n in 10" :key="n" style="margin-left: 30px">
-        <a>2019-03-07 |
-          深度学习基础：概率论(1)_正态分布(高斯分布)</a>
+      <v-card-actions v-for="(subItem,subIndex) in item.articleList" :key="subIndex" style="margin-left: 30px">
+        <a style="margin-right: 10px">{{ subItem.create_time }} | <h3 style="display: inline">{{ subItem.title }}</h3>
+        </a>
+        分类：{{ subItem.classify }}
       </v-card-actions>
     </div>
   </v-container>
 </template>
 
 <script>
+import {queryAllArticleByClass} from "@/api/articles";
+
 export default {
-  name: "Classify"
+  name: "Classify",
+  data() {
+    return {
+      articleByClass: {},
+      articleByDate: {}
+    }
+  },
+  methods: {
+    queryAllArticleByClass() {
+      queryAllArticleByClass({}).then(res => {
+        console.log(res)
+        this.articleByClass = res.data.classifyByTag
+        this.articleByDate = res.data.classifyByDate
+      })
+    }
+  },
+  mounted() {
+    this.queryAllArticleByClass()
+  }
 }
 </script>
 

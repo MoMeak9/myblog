@@ -9,25 +9,24 @@
     </v-toolbar>
     <v-list>
       <v-list-group
-          v-for="(item,index) in items"
+          v-for="(item,index) in classItem"
           :key="index"
-          v-model="item.active"
-          :prepend-icon="item.action"
+          :prepend-icon="item.icon"
           no-action
       >
         <template v-slot:activator>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title"></v-list-item-title>
+            <v-list-item-title v-text="item.class"></v-list-item-title>
           </v-list-item-content>
         </template>
         <v-list-item
-            v-for="(child,index) in item.items"
+            v-for="(child,index) in item.sub_items"
             :key="index"
             link
             to=""
         >
           <v-list-item-content>
-            <v-list-item-title v-text="child.title"></v-list-item-title>
+            <v-list-item-title>{{ child.title }} ({{ child.num }})</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
@@ -87,6 +86,9 @@ export default {
         },
       ]
     }
+  },
+  props: {
+    classItem: {}
   }
 }
 </script>
