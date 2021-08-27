@@ -41,3 +41,11 @@ export function queryAllArticleByClass(param) {
     })
 }
 
+export function getDetail(param) {
+    return request({
+        requestConfig: config.requestConfig.nodejsServer,
+        url: api.detail,
+        method: 'post',
+        data: param
+    })
+}

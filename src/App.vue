@@ -16,7 +16,9 @@
           :color="$vuetify.breakpoint.smAndDown ? '' : 'transparent'"
           size="32"
           icon
-      ><v-icon>mdi-google-translate</v-icon></v-btn>
+      >
+        <v-icon>mdi-google-translate</v-icon>
+      </v-btn>
       <v-tabs
           centered
           class="ml-n9"
@@ -34,7 +36,9 @@
           :color="$vuetify.breakpoint.smAndDown ? 'transparent' : ''"
           size="32"
           icon
-      ><v-icon>mdi-google-translate</v-icon></v-btn>
+      >
+        <v-icon>mdi-google-translate</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-main class="grey lighten-3">
       <router-view></router-view>
@@ -106,7 +110,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 a {
   text-decoration: none;
 }
