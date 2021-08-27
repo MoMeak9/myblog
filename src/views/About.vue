@@ -49,11 +49,11 @@
           <div class="readme">I am a college student in China 🏫, like to pay attention to current affairs hot spots 🆕,
             Bilibili users 📺.<br>
             🤺Use daily:
-            <img v-for="(item,index) in dailyTags" :key="index" :src="item" alt=""><br>
+            <img v-for="item in dailyTags" :key="item" :src="item" alt=""><br>
             💻Work using language:
-            <img v-for="(item,index) in languageTags" :key="index" :src="item" alt=""><br>
+            <img v-for="item in languageTags" :key="item" :src="item" alt=""><br>
             🖥️Using：
-            <img v-for="(item,index) in usingTags" :key="index" :src="item" alt="">
+            <img v-for="item in usingTags" :key="item" :src="item" alt="">
           </div>
           <v-divider></v-divider>
           <div><h3 style="display: inline">教育背景 Education</h3><h5 style="display: inline">_Student in School</h5></div>

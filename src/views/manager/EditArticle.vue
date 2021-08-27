@@ -151,7 +151,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 #manager {
   min-height: 100vh;
 
@@ -162,6 +162,10 @@ export default {
   .v-card {
     margin: 10px;
     padding: 1rem;
+  }
+
+  code {
+    background-color: transparent;
   }
 }
 </style>
