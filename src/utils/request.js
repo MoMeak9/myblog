@@ -16,6 +16,12 @@ const request = axios.create({
 
 // 异常拦截处理器
 const errorHandler = (error) => {
+    if (error.response.status === 401) {
+        console.log('清除Token')
+        this.$router.push('/').then(() => {
+            this.$store.state.userInfo = null
+        });
+    }
     return Promise.reject(error)
 }
 
@@ -40,8 +46,8 @@ request.interceptors.request.use(config => {
         // } else {
         //     isEncrypt = false
         // }
-        if(store.state.token){
-            config.headers['Authorization']= `Bearer ${store.state.token}`
+        if (store.state.token) {
+            config.headers['Authorization'] = `Bearer ${store.state.token}`
         }
     }
     return config
@@ -66,6 +72,9 @@ request.interceptors.response.use((response) => {
     //         return response.data.body
     //     }
     // }
+    if (response.data.code === 1) {
+        console.log('success')
+    }
     return response.data
 }, errorHandler)
 

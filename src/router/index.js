@@ -63,4 +63,20 @@ const router = new VueRouter({
     routes
 })
 
+// 导航守卫
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+router.beforeEach((to, from, next) => {
+    // 设置白名
+    if (to.path === '/' || to.path === '/classify') {
+        next();
+    } else {
+        let userInfo = localStorage.getItem('userInfo');
+        if (userInfo === null || userInfo === '') {
+            next('/');
+        } else {
+            next();
+        }
+    }
+});
+
 export default router
