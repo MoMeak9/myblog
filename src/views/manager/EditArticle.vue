@@ -2,7 +2,10 @@
   <div id="manager">
     <v-card>
       <h3>发布新的文章</h3>
-      <div style="display: flex">
+      <v-form
+          ref="form"
+          lazy-validation
+      >
         <v-text-field
             label="文章标题"
             placeholder="文章标题"
@@ -12,14 +15,14 @@
             v-model="title"
             :rules="titleRule"
         ></v-text-field>
-      </div>
-      <v-textarea
-          v-model="synopsis"
-          label="文章简介"
-          outlined
-          prepend-inner-icon="mdi-map-marker"
-          height="80px"
-          :rules="synopsisRule"></v-textarea>
+        <v-textarea
+            v-model="synopsis"
+            label="文章简介"
+            outlined
+            prepend-inner-icon="mdi-map-marker"
+            height="80px"
+            :rules="synopsisRule"></v-textarea>
+      </v-form>
       <v-combobox
           v-model="tag"
           :items="chips"
@@ -45,15 +48,10 @@
       </v-combobox>
       <v-card-actions style="padding: 0">
         <v-select
+            v-model="classify"
             prepend-inner-icon="mdi-map-marker"
             :items="items"
             label="分类"
-            outlined
-        ></v-select>
-        <v-select
-            prepend-inner-icon="mdi-map-marker"
-            :items="subItems"
-            label="二级分类"
             outlined
         ></v-select>
         <v-spacer></v-spacer>
@@ -68,7 +66,7 @@
           :disabled-menus="[]"
           v-model="contents"
           :include-level="[3, 4]"
-          height="400px"
+          height="800px"
           @upload-image="handleUploadImage"
       ></v-md-editor>
     </v-card>
@@ -93,7 +91,7 @@
 </template>
 
 <script>
-import {addArticle} from "@/api/articles";
+import {addArticle, allClassAndTags,getDetail} from "@/api/articles";
 
 export default {
   name: "ManagerCenter",
@@ -112,8 +110,28 @@ export default {
       synopsisRule: [
         value => !!value || '必填.',
       ],
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-      subItems: ['sss', 'ssss', 998]
+      classify:'',
+      items: [],
+      id: this.$route.query.id
+    }
+  },
+  mounted() {
+    allClassAndTags({}).then(res => {
+      for (const i in res.data) {
+        this.items.push(res.data[i].class)
+      }
+    })
+    if (this.id != null && this.id !== '') {
+      getDetail({
+        article_id: this.id
+      }).then(res => {
+        this.contents = res.data.content
+        this.classify = res.data.classify
+        this.title = res.data.title
+        this.synopsis = res.data.synopsis
+        this.writer = res.data.userName
+        this.tag = res.data.tag.split(',')
+      })
     }
   },
   methods: {
@@ -123,16 +141,18 @@ export default {
     },
     issue() {
       let tags = this.tag.join(',')
-      addArticle({
-        title: this.title,
-        synopsis: this.synopsis,
-        tag: tags,
-        content: this.contents
-      }).then((res) => {
-        this.show = true
-        this.text = res.msg
-        console.log(res)
-      })
+      if (this.$refs.form.validate()) {
+        addArticle({
+          title: this.title,
+          synopsis: this.synopsis,
+          tag: tags,
+          content: this.contents
+        }).then((res) => {
+          this.show = true
+          this.text = res.msg
+          console.log(res)
+        })
+      }
     },
     handleUploadImage(event, insertImage, files) {
       // 拿到 files 之后上传到文件服务器，然后向编辑框中插入对应的内容

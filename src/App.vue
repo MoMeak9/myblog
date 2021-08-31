@@ -8,6 +8,7 @@
     </v-navigation-drawer>
     <v-app-bar
         app
+        elevate-on-scroll
         color="white"
         flat
     >
@@ -22,7 +23,9 @@
       <v-tabs
           centered
           class="ml-n9"
-          color="grey darken-1"
+          color="grey"
+          value=""
+          center-active
       >
         <v-tab
             v-for="(item,index) in links"
@@ -44,12 +47,14 @@
       <router-view></router-view>
       <footerInfo></footerInfo>
     </v-main>
+    <Message/>
   </v-app>
 </template>
 
 <script>
 import footerInfo from "@/components/layout/footerInfo";
 import personal from "@/components/layout/personal";
+import Message from "./components/layout/message.vue";
 
 export default {
   data: () => ({
@@ -65,14 +70,14 @@ export default {
         label: '照片墙（用瀑布流）',
         link: ''
       }, {
-        label: '项目经历',
-        link: ''
+        label: '个人中心',
+        link: '/personal'
       }, {
-        label: '留言板',
-        link: ''
+        label: '文章管理',
+        link: '/manager/my'
       }, {
         label: '关于',
-        link: 'about'
+        link: '/about'
       }
     ],
   }),
@@ -88,7 +93,8 @@ export default {
   },
   components: {
     footerInfo,
-    personal
+    personal,
+    Message
   },
   computed: {
     // 改为全局计算属性
@@ -107,6 +113,16 @@ export default {
           return '60vw'
       }
     }
+  },
+  mounted() {
+    //使用1
+    this.$Message.success({
+      message: "Hello World!",
+      time: 3000, //提示框显示的时间
+      light: false,//设置为true则提示框背景为透明
+    });
+    //使用2
+    this.$Message.error('Hello World!')
   }
 }
 </script>

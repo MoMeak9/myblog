@@ -22,7 +22,8 @@
         </span>
       </v-card-title>
       <v-card-actions v-for="(subItem,subIndex) in item.articleList" :key="subIndex" style="margin-left: 30px">
-        <a style="margin-right: 10px">{{ subItem.create_time }} | <h3 style="display: inline">{{ subItem.title }}</h3>
+        <a :href="`/article?id=${subItem.id}`" style="margin-right: 10px">{{ subItem.create_time }} | <h3
+            style="display: inline">{{ subItem.title }}</h3>
         </a>
         分类：{{ subItem.classify }}
       </v-card-actions>

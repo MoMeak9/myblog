@@ -5,6 +5,8 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import VueParticles from 'vue-particles'
 import animated from 'animate.css'
+import Message from './utils/message'
+Vue.prototype.$Message = Message
 // You need a specific loader for CSS files like https://github.com/webpack/css-loader
 //https://ckang1229.gitee.io/vue-markdown-editor/zh/examples/base-editor.html#%E5%BC%95%E5%85%A5
 

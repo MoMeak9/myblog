@@ -33,7 +33,7 @@
                   >
                     {{ item.icon }}
                   </v-icon>
-                  <span>{{ content.length}}</span>
+                  <span>{{ content.length }}</span>
                 </template>
                 <span>{{ item.label }}</span>
               </v-tooltip>
@@ -47,7 +47,7 @@
               icon="mdi-book-open-outline"
           >{{ synopsis }}
           </v-alert>
-          <v-md-editor :value="content" mode="preview" ></v-md-editor>
+          <v-md-editor :value="content" mode="preview"></v-md-editor>
           <!--          <v-md-preview :text="content" ref="preview"/>-->
           <!--          <vue-simple-markdown :source="content" v-highlight></vue-simple-markdown>-->
           <div style="text-align: left">
@@ -65,15 +65,15 @@
              v-if="!$vuetify.breakpoint.xs"
       >
         <v-sheet style="position: fixed;width: 400px">
-<!--          目录-->
-<!--          <div-->
-<!--              v-for="anchor in titles"-->
-<!--              :key="anchor"-->
-<!--              :style="{ padding: `10px 0 10px ${anchor.indent * 20}px` }"-->
-<!--              @click="handleAnchorClick(anchor)"-->
-<!--          >-->
-<!--            <a style="cursor: pointer">{{ anchor.title }}</a>-->
-<!--          </div>-->
+          <!--          目录-->
+          <!--          <div-->
+          <!--              v-for="anchor in titles"-->
+          <!--              :key="anchor"-->
+          <!--              :style="{ padding: `10px 0 10px ${anchor.indent * 20}px` }"-->
+          <!--              @click="handleAnchorClick(anchor)"-->
+          <!--          >-->
+          <!--            <a style="cursor: pointer">{{ anchor.title }}</a>-->
+          <!--          </div>-->
         </v-sheet>
       </v-col>
     </v-row>
@@ -159,6 +159,10 @@ export default {
 <style lang="scss">
 #article {
   min-height: 100vh;
+
+  code {
+    background-color: transparent;
+  }
 
   .content {
     h1 {
