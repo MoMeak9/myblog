@@ -6,43 +6,7 @@
     >
       <personal></personal>
     </v-navigation-drawer>
-    <v-app-bar
-        app
-        elevate-on-scroll
-        color="white"
-        flat
-    >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-btn
-          :color="$vuetify.breakpoint.smAndDown ? '' : 'transparent'"
-          size="32"
-          icon
-      >
-        <v-icon>mdi-google-translate</v-icon>
-      </v-btn>
-      <v-tabs
-          centered
-          class="ml-n9"
-          color="grey"
-          value=""
-          center-active
-      >
-        <v-tab
-            v-for="(item,index) in links"
-            :key="index"
-            :to="item.link"
-        >
-          {{ item.label }}
-        </v-tab>
-      </v-tabs>
-      <v-btn
-          :color="$vuetify.breakpoint.smAndDown ? 'transparent' : ''"
-          size="32"
-          icon
-      >
-        <v-icon>mdi-google-translate</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <top-bar @changeDrawer="drawer = !drawer"></top-bar>
     <v-main class="grey lighten-3">
       <router-view></router-view>
       <footerInfo></footerInfo>
@@ -54,32 +18,12 @@
 <script>
 import footerInfo from "@/components/layout/footerInfo";
 import personal from "@/components/layout/personal";
-import Message from "./components/layout/message.vue";
+import Message from "@/components/layout/message.vue";
+import topBar from "@/components/layout/topBar";
 
 export default {
   data: () => ({
-    drawer: false,
-    links: [
-      {
-        label: '首页',
-        link: '/'
-      }, {
-        label: '文章归档',
-        link: '/classify'
-      }, {
-        label: '照片墙（用瀑布流）',
-        link: ''
-      }, {
-        label: '个人中心',
-        link: '/personal'
-      }, {
-        label: '文章管理',
-        link: '/manager/my'
-      }, {
-        label: '关于',
-        link: '/about'
-      }
-    ],
+    drawer: false
   }),
   created() {
     // 在页面加载时读取sessionStorage 是存储在相关对象，而不是单独存储
@@ -94,7 +38,8 @@ export default {
   components: {
     footerInfo,
     personal,
-    Message
+    Message,
+    topBar
   },
   computed: {
     // 改为全局计算属性
@@ -116,13 +61,13 @@ export default {
   },
   mounted() {
     //使用1
-    this.$Message.success({
-      message: "Hello World!",
-      time: 3000, //提示框显示的时间
-      light: false,//设置为true则提示框背景为透明
-    });
-    //使用2
-    this.$Message.error('Hello World!')
+    // this.$Message.success({
+    //   message: "Hello World!",
+    //   time: 3000, //提示框显示的时间
+    //   light: false,//设置为true则提示框背景为透明
+    // });
+    // //使用2
+    // this.$Message.error('Hello World!')
   }
 }
 </script>
