@@ -3,11 +3,13 @@
  */
 import request from '@/utils/request'
 import config from '@/config'
+import store from "@/store";
 
-const api = {
+export const api = {
     login: "/api/user/login",
-    register:"/api/user/register",
-    getUserInfo:"/api/user/getUserInfo",
+    register: "/api/user/register",
+    getUserInfo: "/api/user/getUserInfo",
+    uploadImage: "/api/user/uploadImage"
 }
 
 export function login(param) {
@@ -27,12 +29,25 @@ export function register(param) {
         data: param
     })
 }
+
 export function getUserInfo(param) {
     return request({
         requestConfig: config.requestConfig.nodejsServer,
         url: api.getUserInfo,
         method: 'get',
-        data: param
+        data: param,
+    })
+}
+
+export function uploadImage(param) {
+    return request({
+        requestConfig: config.requestConfig.nodejsServer,
+        url: api.uploadImage,
+        method: 'post',
+        data: param,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
     })
 }
 
