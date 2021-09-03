@@ -3,7 +3,6 @@
  */
 import request from '@/utils/request'
 import config from '@/config'
-import store from "@/store";
 
 export const api = {
     login: "/api/user/login",

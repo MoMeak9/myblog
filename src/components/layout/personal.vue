@@ -4,21 +4,21 @@
         color="indigo"
         size="100"
     >
-      <v-icon dark v-if="!this.$store.state.userInfo.head_img"
+      <v-icon dark v-if="!userInfo"
               large>
         mdi-account-circle
       </v-icon>
       <img
           v-else
-          :src="this.$store.state.userInfo.head_img"
-          alt=""
+          :src="userInfo.head_img"
+          alt="头像"
       >
     </v-avatar>
-    <h3>{{ this.$store.state.userInfo.nickname }}</h3>
-    <span>{{ this.$store.state.userInfo.intro }}</span>
+    <h3>{{ userInfo.nickname }}</h3>
+    <span>{{ userInfo.intro }}</span>
     <v-divider style="margin: 20px 0 20px"
     ></v-divider>
-    <div class="insertImage" v-if="!token">
+    <div class="insertImage" v-if="!userInfo">
       你还没登入哦？
       <br>没账号的话可以考虑注册一下？
     </div>
@@ -26,13 +26,13 @@
     <v-list
         nav
         dense
-        v-if="token"
+        v-if="userInfo"
     >
       <v-list-item-group
           color="primary"
       >
         <v-list-item
-            v-for="(item,index) in items"
+            v-for="(item,index) in userInfo.menuItems"
             :key="index"
             :to="item.link"
         >
@@ -242,7 +242,6 @@ export default {
       showSignIn: false,
       showSignUp: false,
       selectedItem: 0,
-      items: [],
       valid: true,
       name: '',
       nameRules: [
@@ -267,6 +266,7 @@ export default {
     if (this.$store.state.items) {
       this.items = this.$store.state.items
     }
+    console.log(this.items = this.$store.state.userInfo)
   },
   methods: {
     userRegister() {
