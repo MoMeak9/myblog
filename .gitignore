@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
 /dist
-.env
-serverless.yml
+dist/.env
+dist/serverless.yml
 
 
 # local env files
