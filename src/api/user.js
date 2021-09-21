@@ -8,7 +8,8 @@ export const api = {
     login: "/api/user/login",
     register: "/api/user/register",
     getUserInfo: "/api/user/getUserInfo",
-    uploadImage: "/api/user/uploadImage"
+    uploadImage: "/api/user/uploadImage",
+    updateUser: "/api/user/updateUser"
 }
 
 export function login(param) {
@@ -50,3 +51,14 @@ export function uploadImage(param) {
     })
 }
 
+export function updateUser(param) {
+    return request({
+        requestConfig: config.requestConfig.nodejsServer,
+        url: api.updateUser,
+        method: 'post',
+        data: param,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    })
+}

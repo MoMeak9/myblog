@@ -60,12 +60,14 @@
                   outlined></v-textarea>
               <div style="display: flex;justify-content: center">
                 <v-btn
+                    @click="editUserInfo"
                     outlined
                     color="green"
                     style="margin-right: 10px">
                   保存
                 </v-btn>
                 <v-btn
+                    @click="changePassword"
                     outlined
                     color="blue">
                   更改密码
@@ -80,15 +82,12 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+import {updateUser} from "../api/user";
 
 export default {
   name: "PersonalCenter",
   mounted() {
-    if(!this.$store.state.userInfo){
-      this.$router.push({
-        path: "/",
-      })
-    }
   },
   data() {
     return {
@@ -97,9 +96,30 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getUserInfo']),
     changeFile(file) {
       console.log(file)
       this.imageFile = file
+    },
+    editHeadImage() {
+      let Form = new FormData()
+      Form.append('file', this.imageFile)
+    },
+    editUserInfo() {
+      updateUser({
+        ...this.userInfo
+      }).then(res => {
+        this.getUserInfo()
+        this.$Message.success({
+          message: "修改成功!",
+          time: 3000, //提示框显示的时间
+          light: false,//设置为true则提示框背景为透明
+        })
+        console.log(res)
+      })
+    },
+    changePassword() {
+
     }
   },
 

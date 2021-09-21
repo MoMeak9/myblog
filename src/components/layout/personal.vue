@@ -51,7 +51,6 @@
         transition="dialog-bottom-transition"
         max-width="600"
         persistent
-        v-if="!token"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -59,6 +58,7 @@
             color="success"
             v-bind="attrs"
             v-on="on"
+            v-if="!userInfo"
         >登入
         </v-btn>
       </template>
@@ -121,13 +121,13 @@
         v-model="showSignIn"
         transition="dialog-bottom-transition"
         max-width="600"
-        v-if="!token"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
             color="primary"
             v-bind="attrs"
             v-on="on"
+            v-if="!userInfo"
         >注册
         </v-btn>
       </template>
@@ -194,50 +194,22 @@
         </v-card>
       </template>
     </v-dialog>
-    <v-dialog
-        v-model="dialog"
-        width="500"
-    >
-      <v-card>
-        <v-card-title class="text-h5 red lighten-2">
-          错误！{{ text }}
-        </v-card-title>
-
-        <v-card-text>
-          {{ text }}，请再次检查您所填的内容
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-              color="primary"
-              text
-              @click="dialog = false"
-          >
-            关闭
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
     <v-btn
         color="primary"
         @click="loginOut"
-        v-if="token">
+        v-if="userInfo">
       登出
     </v-btn>
   </div>
 </template>
 <script>
 import {register, login, getUserInfo} from "@/api/user";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: "personal",
   data() {
     return {
-      dialog: false,
       text: '',
       showSignIn: false,
       showSignUp: false,
@@ -269,6 +241,7 @@ export default {
     console.log(this.items = this.$store.state.userInfo)
   },
   methods: {
+    ...mapActions(['Logout']),
     userRegister() {
       register({
         username: this.email,
@@ -295,6 +268,11 @@ export default {
           this.showSignUp = false
           this.$store.state.token = res.token
           getUserInfo({}).then(res => {
+            this.$Message.success({
+              message: "登入成功!",
+              time: 3000, //提示框显示的时间
+              light: false,//设置为true则提示框背景为透明
+            });
             this.$store.state.items = res.data.menuItems
             this.items = res.data.menuItems
             this.$store.state.userInfo = {
@@ -304,7 +282,6 @@ export default {
             this.head_img = res.data.head_img
           })
         } else {
-          this.dialog = true
           this.text = res.msg
         }
       })
@@ -321,7 +298,7 @@ export default {
       this.$refs.form.resetValidation()
     },
     loginOut() {
-      this.$store.commit('loginOut')
+      this.Logout()
       location.reload()
     }
   },
