@@ -1,7 +1,7 @@
 <template>
   <v-container id="about">
     <v-row justify="center">
-      <v-col :cols="$vuetify.breakpoint.xs?0:3"
+      <v-col :cols="$vuetify.breakpoint.xs?0:4"
              v-if="!$vuetify.breakpoint.xs"
       >
         <v-sheet class="animate__animated animate__backInDown">

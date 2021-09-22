@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^1.7.7",
+    "@vue/compiler-sfc": "^3.2.8",
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
@@ -33,7 +34,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
+    "store": "^2.0.12",
     "vue-cli-plugin-vuetify": "~2.4.1",
+    "vue-loader": "^15.9.8",
     "vue-particles": "^1.0.9",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"

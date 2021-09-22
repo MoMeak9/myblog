@@ -15,6 +15,7 @@
 <style>
 .message {
   left: 50%;
+  top: 20px;
   z-index: 9999;
   display: flex;
   position: fixed;

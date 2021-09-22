@@ -4,21 +4,21 @@
         color="indigo"
         size="100"
     >
-      <v-icon dark v-if="!this.$store.state.userInfo.head_img"
+      <v-icon dark v-if="!userInfo"
               large>
         mdi-account-circle
       </v-icon>
       <img
           v-else
-          :src="this.$store.state.userInfo.head_img"
-          alt=""
+          :src="userInfo.head_img"
+          alt="头像"
       >
     </v-avatar>
-    <h3>{{ this.$store.state.userInfo.nickname }}</h3>
-    <span>{{ this.$store.state.userInfo.intro }}</span>
+    <h3>{{ userInfo.nickname }}</h3>
+    <span>{{ userInfo.intro }}</span>
     <v-divider style="margin: 20px 0 20px"
     ></v-divider>
-    <div class="insertImage" v-if="!token">
+    <div class="insertImage" v-if="!userInfo">
       你还没登入哦？
       <br>没账号的话可以考虑注册一下？
     </div>
@@ -26,13 +26,13 @@
     <v-list
         nav
         dense
-        v-if="token"
+        v-if="userInfo"
     >
       <v-list-item-group
           color="primary"
       >
         <v-list-item
-            v-for="(item,index) in items"
+            v-for="(item,index) in userInfo.menuItems"
             :key="index"
             :to="item.link"
         >
@@ -51,7 +51,6 @@
         transition="dialog-bottom-transition"
         max-width="600"
         persistent
-        v-if="!token"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -59,6 +58,7 @@
             color="success"
             v-bind="attrs"
             v-on="on"
+            v-if="!userInfo"
         >登入
         </v-btn>
       </template>
@@ -121,13 +121,13 @@
         v-model="showSignIn"
         transition="dialog-bottom-transition"
         max-width="600"
-        v-if="!token"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
             color="primary"
             v-bind="attrs"
             v-on="on"
+            v-if="!userInfo"
         >注册
         </v-btn>
       </template>
@@ -194,55 +194,26 @@
         </v-card>
       </template>
     </v-dialog>
-    <v-dialog
-        v-model="dialog"
-        width="500"
-    >
-      <v-card>
-        <v-card-title class="text-h5 red lighten-2">
-          错误！{{ text }}
-        </v-card-title>
-
-        <v-card-text>
-          {{ text }}，请再次检查您所填的内容
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-              color="primary"
-              text
-              @click="dialog = false"
-          >
-            关闭
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
     <v-btn
         color="primary"
         @click="loginOut"
-        v-if="token">
+        v-if="userInfo">
       登出
     </v-btn>
   </div>
 </template>
 <script>
 import {register, login, getUserInfo} from "@/api/user";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: "personal",
   data() {
     return {
-      dialog: false,
       text: '',
       showSignIn: false,
       showSignUp: false,
       selectedItem: 0,
-      items: [],
       valid: true,
       name: '',
       nameRules: [
@@ -267,8 +238,10 @@ export default {
     if (this.$store.state.items) {
       this.items = this.$store.state.items
     }
+    console.log(this.items = this.$store.state.userInfo)
   },
   methods: {
+    ...mapActions(['Logout']),
     userRegister() {
       register({
         username: this.email,
@@ -295,6 +268,11 @@ export default {
           this.showSignUp = false
           this.$store.state.token = res.token
           getUserInfo({}).then(res => {
+            this.$Message.success({
+              message: "登入成功!",
+              time: 3000, //提示框显示的时间
+              light: false,//设置为true则提示框背景为透明
+            });
             this.$store.state.items = res.data.menuItems
             this.items = res.data.menuItems
             this.$store.state.userInfo = {
@@ -304,7 +282,6 @@ export default {
             this.head_img = res.data.head_img
           })
         } else {
-          this.dialog = true
           this.text = res.msg
         }
       })
@@ -321,7 +298,7 @@ export default {
       this.$refs.form.resetValidation()
     },
     loginOut() {
-      this.$store.commit('loginOut')
+      this.Logout()
       location.reload()
     }
   },
