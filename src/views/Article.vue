@@ -5,20 +5,20 @@
              offset-sm="0">
         <v-sheet class="content">
           <div style="text-align: center;margin-bottom: 10px">
-            <h1>{{ title }}</h1>
+            <h1 style="padding: 10px 0">{{ title }}</h1>
             <div>
-              <v-chip
-                  v-for="(item,index) in tag"
-                  :key="index"
-                  class="ma-2"
-                  color="blue"
-                  label
-                  text-color="white"
-                  small
-              >
-                <v-icon left>mdi-label</v-icon>
-                {{ item }}
-              </v-chip>
+              <!--              <v-chip-->
+              <!--                  v-for="(item,index) in tag"-->
+              <!--                  :key="index"-->
+              <!--                  class="ma-2"-->
+              <!--                  color="blue"-->
+              <!--                  label-->
+              <!--                  text-color="white"-->
+              <!--                  small-->
+              <!--              >-->
+              <!--                <v-icon left>mdi-label</v-icon>-->
+              <!--                {{ item }}-->
+              <!--              </v-chip>-->
             </div>
             <div>
               <v-tooltip bottom v-for="(item,index) in statistics" :key=index>
@@ -33,11 +33,10 @@
                   >
                     {{ item.icon }}
                   </v-icon>
-                  <span>{{ content.length }}</span>
+                  <span style="font-size: 14px">文章字数：{{ content.length }}</span>
                 </template>
                 <span>{{ item.label }}</span>
               </v-tooltip>
-              <div> 作者：{{ writer }}</div>
             </div>
           </div>
           <v-alert

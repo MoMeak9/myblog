@@ -1,6 +1,10 @@
 <template>
   <v-container id="classify">
-    <v-card class="d-flex flex-wrap justify-space-around ">
+    <v-skeleton-loader
+        v-if="loading"
+        type="list-item-two-line"
+    ></v-skeleton-loader>
+    <v-card class="d-flex flex-wrap justify-space-around " v-else>
       <v-card
           v-for="(item,index) in articleByClass"
           :key="index"
@@ -12,7 +16,16 @@
         <h4>{{ item.className }} <span style="float: right">({{ item.num }})</span></h4>
       </v-card>
     </v-card>
-    <div v-for="(item,index) in articleByDate" :key="index" style="margin:10px 0 0" class="transparent">
+    <div style="text-align: center;padding: 100px 0 "
+         v-if="loading">
+      <v-progress-circular
+          indeterminate
+          size="64"
+      ></v-progress-circular>
+    </div>
+    <div v-for="(item,index) in articleByDate"
+         :key="index" style="margin:10px 0 0"
+         class="transparent">
       <v-card-title v-if="item.articleList.length > 0">
         <span>
           <v-icon>
@@ -39,16 +52,21 @@ export default {
   data() {
     return {
       articleByClass: {},
-      articleByDate: {}
+      articleByDate: {},
+      loading: true
     }
   },
   methods: {
     queryAllArticleByClass() {
+      this.loading = true
       queryAllArticleByClass({}).then(res => {
-        console.log(res)
         this.articleByClass = res.data.classifyByTag
         this.articleByDate = res.data.classifyByDate
+        this.loading = false
       })
+      setTimeout(function () {
+        this.loading = false
+      }, 3000)
     }
   },
   mounted() {

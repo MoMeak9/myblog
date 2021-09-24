@@ -50,23 +50,14 @@ export default {
           label: '文章归档',
           link: '/classify'
         }, {
-          label: '照片墙（用瀑布流）',
-          link: ''
-        }, {
-          label: '个人中心',
-          link: '/personal'
-        }, {
-          label: '文章管理',
-          link: '/manager/my'
-        }, {
           label: '关于',
           link: '/about'
         }
       ],
     }
   },
-  methods:{
-    changeDrawer(){
+  methods: {
+    changeDrawer() {
       this.$emit('changeDrawer')
     }
   }

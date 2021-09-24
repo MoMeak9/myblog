@@ -10,6 +10,9 @@
              offset-sm="0">
         <v-sheet class="article-list">
           <h1>最近文章</h1>
+          <v-skeleton-loader v-for="item in 6" :key="item"
+                             type="card-heading,list-item-two-line@2"
+          ></v-skeleton-loader>
           <div v-for="item in allArticles" :key="item.id">
             <articles-item :item="item"></articles-item>
           </div>
@@ -29,7 +32,8 @@ export default {
   data() {
     return {
       allArticles: [],
-      classItem: []
+      classItem: [],
+      loading: true
     }
   },
   components: {
