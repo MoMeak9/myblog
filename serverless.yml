@@ -1,0 +1,12 @@
+component: website
+name: website-2bLgTj46x
+org: '1259409954'
+app: vueblog
+stage: dev
+inputs:
+  region: ap-guangzhou
+  src:
+    src: ./dist
+    index: index.html
+    error: index.html
+  bucketName: my-bucket-zwy0kqy

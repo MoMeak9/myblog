@@ -15,6 +15,7 @@
                 <v-icon color="white" large v-else>mdi-account-circle</v-icon>
               </v-avatar>
               <v-file-input
+                  ref="uploadImage"
                   @change="changeFile"
                   accept="image/*"
                   label="上传你的头像"

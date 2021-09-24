@@ -68,20 +68,20 @@ const router = new VueRouter({
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
     // 设置白名
-    if (to.path === '/' || to.path === '/classify' || to.path === '/article' || to.path === '/about') {
-        next();
-    } else {
-        let userInfo = store.state.userInfo;
-        if (userInfo == null || userInfo === '') {
-            next('/');
-        } else {
-            if (userInfo.role !== 1) {
-                next('/');
-            } else {
-                next();
-            }
-        }
-    }
+    // if (to.path === '/' || to.path === '/classify' || to.path === '/article' || to.path === '/about') {
+    //     next();
+    // } else {
+    //     let userInfo = store.state.userInfo;
+    //     if (userInfo == null || userInfo === '') {
+    //         next('/');
+    //     } else {
+    //         if (userInfo.role !== 1) {
+    //             next('/');
+    //         } else {
+    //             next();
+    //         }
+    //     }
+    // }
 });
 
 export default router
