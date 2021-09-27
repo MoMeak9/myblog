@@ -50,6 +50,9 @@ export default {
           label: '文章归档',
           link: '/classify'
         }, {
+          label: '友情链接',
+          link: '/friend'
+        }, {
           label: '关于',
           link: '/about'
         }

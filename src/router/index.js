@@ -57,6 +57,11 @@ const routes = [
         component: () => import('@/views/Classify')
     },
     {
+        path: '/friend',
+        name: '友链',
+        component: () => import('@/views/Friendship')
+    },
+    {
         path: '/404',
         name: '404',
         component: () => import('@/views/404')

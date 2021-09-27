@@ -1,5 +1,7 @@
 <template>
+  <v-container id="friend">
 
+  </v-container>
 </template>
 
 <script>
@@ -8,6 +10,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+#friend {
 
+}
 </style>
