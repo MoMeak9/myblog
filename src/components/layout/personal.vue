@@ -14,8 +14,8 @@
           alt="头像"
       >
     </v-avatar>
-    <h3>{{ userInfo.nickname }}</h3>
-    <span>{{ userInfo.intro }}</span>
+    <h3 v-if="userInfo">{{ userInfo.nickname }}</h3>
+    <span v-if="userInfo">{{ userInfo.intro }}</span>
     <v-divider style="margin: 20px 0 20px"
     ></v-divider>
     <div class="insertImage" v-if="!userInfo">
@@ -268,11 +268,12 @@ export default {
           this.showSignUp = false
           this.$store.state.token = res.token
           getUserInfo({}).then(res => {
+            console.log(res)
             this.$Message.success({
               message: "登入成功!",
               time: 3000, //提示框显示的时间
               light: false,//设置为true则提示框背景为透明
-            });
+            })
             this.$store.state.items = res.data.menuItems
             this.items = res.data.menuItems
             this.$store.state.userInfo = {

@@ -55,8 +55,16 @@ const routes = [
         path: '/classify',
         name: 'classify',
         component: () => import('@/views/Classify')
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: () => import('@/views/404')
+    },
+    {
+        path: '*',    // 此处需特别注意至于最底部
+        redirect: '/404'
     }
-
 ]
 
 const router = new VueRouter({
@@ -69,20 +77,21 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // 设置白名
     window.scrollTo(0, 0)
-    if (to.path === '/' || to.path === '/classify' || to.path === '/article' || to.path === '/about') {
-        next();
-    } else {
-        let userInfo = store.state.userInfo;
-        if (userInfo == null || userInfo === '') {
-            next('/');
-        } else {
-            if (userInfo.role !== 1) {
-                next('/');
-            } else {
-                next();
-            }
-        }
-    }
+    next()
+    // if (to.path === '/' || to.path === '/classify' || to.path === '/article' || to.path === '/about') {
+    //     next();
+    // } else {
+    //     let userInfo = store.state.userInfo;
+    //     if (userInfo == null || userInfo === '') {
+    //         next('/');
+    //     } else {
+    //         if (userInfo.role !== 1) {
+    //             next('/');
+    //         } else {
+    //             next();
+    //         }
+    //     }
+    // }
 });
 
 export default router

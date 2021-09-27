@@ -1,23 +1,20 @@
-/**
- * Created by Yihui_Shi on 2021/8/3 23:11
- */
 import axios from 'axios'
 import {VueAxios} from './axios'
 import store from '../store'
-// import crypt from './AESUtils'
 
-// let isEncrypt = false
-// let appId = null
-// let secret = null
-// 创建 axios 实例
 const request = axios.create({
-    timeout: 300000 // 请求超时时间
+    baseURL: process.env.VUE_APP_BASE_API,
+    timeout: 5000
 })
 
 // 异常拦截处理器
 const errorHandler = (error) => {
     if (error.response.status === 401) {
-        console.log('清除Token')
+        this.$Message.error({
+            message: "token已过期!",
+            time: 3000,
+            light: false,
+        })
         this.$router.push('/').then(() => {
             this.$store.state.userInfo = null
         });
@@ -26,11 +23,8 @@ const errorHandler = (error) => {
 }
 
 // request interceptor
-request.interceptors.request.use(config => {
-    if (config.requestConfig) {
-        config.baseURL = process.env.NODE_ENV === 'development'
-            ? config.requestConfig.dev
-            : config.requestConfig.prod
+request.interceptors.request.use(
+    config => {
         // //加密
         // if (config.requestConfig.isEncrypt) {
         //     config.headers = {
@@ -49,29 +43,18 @@ request.interceptors.request.use(config => {
         if (store.state.token) {
             config.headers['Authorization'] = `Bearer ${store.state.token}`
         }
-    }
-    return config
-}, errorHandler)
+        return config
+    }, errorHandler)
 
 // response interceptor
 request.interceptors.response.use((response) => {
-    // if (response.data.head.respCode === -1
-    //     || response.data.head.respCode === -2) {
-    //     Message.error(response.data.head.respMsg)
-    //     return Promise.reject(response.data.head.respMsg)
-    // } else {
-    //     if (response.data.body == null) {
-    //         return ''
-    //     } else if (isEncrypt) {
-    //         try {
-    //             return crypt.decrypt(appId, secret, response.data.body)
-    //         } catch (e) {
-    //             return Promise.reject(e)
-    //         }
-    //     } else {
-    //         return response.data.body
-    //     }
-    // }
+    if (response.data.code === -1
+        || response.data.code === -2) {
+        this.$Message.error({
+            message: response.data.msg
+        })
+        return Promise.reject(response.data.msg)
+    }
     if (response.data.code === 1) {
         console.log('success')
     }

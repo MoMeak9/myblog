@@ -14,7 +14,6 @@ export const api = {
 
 export function login(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.login,
         method: 'post',
         data: param
@@ -23,7 +22,6 @@ export function login(param) {
 
 export function register(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.register,
         method: 'post',
         data: param
@@ -32,7 +30,6 @@ export function register(param) {
 
 export function getUserInfo(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.getUserInfo,
         method: 'get',
         data: param,
@@ -41,7 +38,6 @@ export function getUserInfo(param) {
 
 export function uploadImage(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.uploadImage,
         method: 'post',
         data: param,
@@ -53,12 +49,8 @@ export function uploadImage(param) {
 
 export function updateUser(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.updateUser,
         method: 'post',
         data: param,
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }
     })
 }

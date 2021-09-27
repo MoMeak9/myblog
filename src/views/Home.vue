@@ -4,16 +4,23 @@
       <v-col :cols="$vuetify.breakpoint.xs?0:3"
              v-if="!$vuetify.breakpoint.xs"
       >
-        <classify-menu :classItem="classItem"></classify-menu>
+        <v-skeleton-loader
+            v-if="loading"
+            type="card-heading,list-item-two-line@2"
+        ></v-skeleton-loader>
+        <classify-menu :classItem="classItem" v-else></classify-menu>
       </v-col>
       <v-col :cols="$vuetify.breakpoint.xs?0:8"
              offset-sm="0">
         <v-sheet class="article-list">
           <h1>最近文章</h1>
-          <v-skeleton-loader v-for="item in 6" :key="item"
-                             type="card-heading,list-item-two-line@2"
-          ></v-skeleton-loader>
-          <div v-for="item in allArticles" :key="item.id">
+          <div v-if="loading">
+            <v-skeleton-loader
+                v-for="item in 6" :key="item"
+                type="card-heading,list-item-two-line@2"
+            ></v-skeleton-loader>
+          </div>
+          <div v-else v-for="item in allArticles" :key="item.id">
             <articles-item :item="item"></articles-item>
           </div>
         </v-sheet>
@@ -42,11 +49,20 @@ export default {
   },
   methods: {
     queryAllArticle() {
+      this.loading = true
       queryAllArticle({}).then((res) => {
+        this.loading = false
         this.allArticles = res.data.allArticle
         this.classItem = res.data.classify
-        console.log(res)
       })
+      setTimeout(() => {
+        this.loading = false
+        this.$Message.error({
+          message: '加载失败',
+          time: 3000,
+          light: false,
+        })
+      }, 3000)
     }
   },
   mounted() {

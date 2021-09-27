@@ -133,20 +133,6 @@ export default {
         this.tag = res.data.tag.split(',')
       })
     },
-    // handleAnchorClick(anchor) {
-    //   const {preview} = this.$refs;
-    //   const {lineIndex} = anchor;
-    //
-    //   const heading = preview.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
-    //
-    //   if (heading) {
-    //     preview.scrollToTarget({
-    //       target: heading,
-    //       scrollContainer: window,
-    //       top: 60,
-    //     });
-    //   }
-    // }
   },
   components: {
     comment,

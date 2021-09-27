@@ -70,23 +70,6 @@
           @upload-image="handleUploadImage"
       ></v-md-editor>
     </v-card>
-    <v-snackbar
-        v-model="show"
-        timeout="3000"
-    >
-      {{ text }}
-      <template v-slot:action="{ attrs }">
-        <v-btn
-            color="blue"
-            text
-            v-bind="attrs"
-            @click="show = false"
-        >
-          <v-icon>mdi-close-box</v-icon>
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </div>
 </template>
 
@@ -103,8 +86,6 @@ export default {
       tag: [],
       contents: '',
       chips: ['Java'],
-      show: false,
-      text: '',
       titleRule: [
         value => !!value || '必填.',
       ],
@@ -148,10 +129,12 @@ export default {
           synopsis: this.synopsis,
           tag: tags,
           content: this.contents
-        }).then((res) => {
-          this.show = true
-          this.text = res.msg
-          console.log(res)
+        }).then(res => {
+          this.$Message.success({
+            message: res.msg,
+            time: 3000,
+            light: false,
+          })
         })
       }
     },

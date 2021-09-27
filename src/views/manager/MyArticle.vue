@@ -95,8 +95,13 @@ export default {
         state: state,
         article_id: article_id,
         user_uuid: this.$store.state.userInfo.uuid
-      }).then(() => {
+      }).then(res => {
         this.queryAllTableData()
+        this.$Message.success({
+          message: res.msg,
+          time: 3000,
+          light: false,
+        })
       })
     },
     toEditArticle(id) {

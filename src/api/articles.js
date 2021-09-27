@@ -17,7 +17,6 @@ const api = {
 
 export function addArticle(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.add,
         method: 'post',
         data: param
@@ -26,7 +25,6 @@ export function addArticle(param) {
 
 export function queryAllList(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.allList,
         method: 'post',
         data: param
@@ -35,7 +33,6 @@ export function queryAllList(param) {
 
 export function queryAllArticle(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.allArticle,
         method: 'post',
         data: param
@@ -44,7 +41,6 @@ export function queryAllArticle(param) {
 
 export function queryAllArticleByClass(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.classify,
         method: 'get',
         data: param
@@ -53,7 +49,6 @@ export function queryAllArticleByClass(param) {
 
 export function allClassAndTags(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.allClassAndTags,
         method: 'get',
         data: param
@@ -62,7 +57,6 @@ export function allClassAndTags(param) {
 
 export function getDetail(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.detail,
         method: 'post',
         data: param
@@ -71,7 +65,6 @@ export function getDetail(param) {
 
 export function editState(param) {
     return request({
-        requestConfig: config.requestConfig.nodejsServer,
         url: api.editState,
         method: 'post',
         data: param

@@ -15,6 +15,7 @@
                 <v-icon color="white" large v-else>mdi-account-circle</v-icon>
               </v-avatar>
               <v-file-input
+                  id="uploadImage"
                   ref="uploadImage"
                   @change="changeFile"
                   accept="image/*"
@@ -84,12 +85,10 @@
 
 <script>
 import {mapActions} from "vuex";
-import {updateUser} from "../api/user";
+import {updateUser} from "@/api/user";
 
 export default {
   name: "PersonalCenter",
-  mounted() {
-  },
   data() {
     return {
       imageFile: '',
@@ -99,24 +98,32 @@ export default {
   methods: {
     ...mapActions(['getUserInfo']),
     changeFile(file) {
-      console.log(file)
-      this.imageFile = file
-    },
-    editHeadImage() {
-      let Form = new FormData()
-      Form.append('file', this.imageFile)
+      return new Promise(function (resolve, reject) {
+        const reader = new FileReader()
+        let imgResult = ''
+        reader.readAsDataURL(file)
+        reader.onload = function () {
+          return imgResult = reader.result
+        }
+        reader.onerror = function (error) {
+          reject(error)
+        }
+        reader.onloadend = function () {
+          resolve(imgResult)
+        }
+      }).then((res) => {
+        this.userInfo.head_img = res
+      })
     },
     editUserInfo() {
-      updateUser({
-        ...this.userInfo
-      }).then(res => {
-        this.getUserInfo()
+      let Form = new FormData
+      Form.append('userInfo', this.userInfo)
+      updateUser({...this.userInfo}).then(res => {
         this.$Message.success({
           message: "修改成功!",
           time: 3000, //提示框显示的时间
           light: false,//设置为true则提示框背景为透明
         })
-        console.log(res)
       })
     },
     changePassword() {
