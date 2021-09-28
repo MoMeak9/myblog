@@ -2,7 +2,6 @@
  * Created by Yihui_Shi on 2021/8/7 12:46
  */
 import request from '@/utils/request'
-import config from '@/config'
 
 export const api = {
     login: "/api/user/login",

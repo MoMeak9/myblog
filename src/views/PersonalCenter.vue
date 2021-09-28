@@ -24,7 +24,7 @@
                   style="margin-top: 30px"
               ></v-file-input>
               <v-text-field label="用户名"
-                            :value="userInfo.nickname"
+                            v-model="userInfo.nickname"
                             placeholder="用户名"
                             prepend-icon="mdi-cursor-default">
               </v-text-field>
@@ -47,16 +47,16 @@
                 ></v-radio>
               </v-radio-group>
               <v-text-field label="年龄"
-                            :value="userInfo.age"
+                            v-model="userInfo.age"
                             prepend-icon="mdi-cursor-default">
               </v-text-field>
               <v-text-field label="学校"
-                            :value="userInfo.school"
+                            v-model="userInfo.school"
                             prepend-icon="mdi-cursor-default">
               </v-text-field>
               <v-textarea
                   label="简介"
-                  :value="userInfo.intro"
+                  v-model="userInfo.intro"
                   placeholder="这个人很懒，什么也没留下"
                   prepend-icon="mdi-cursor-default"
                   outlined></v-textarea>
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import {updateUser} from "@/api/user";
 
 export default {
@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       imageFile: '',
-      userInfo: this.$store.state.userInfo
+      editForm: {}
     }
   },
   methods: {
@@ -116,9 +116,7 @@ export default {
       })
     },
     editUserInfo() {
-      let Form = new FormData
-      Form.append('userInfo', this.userInfo)
-      updateUser({...this.userInfo}).then(res => {
+      updateUser(this.userInfo).then(res => {
         this.$Message.success({
           message: "修改成功!",
           time: 3000, //提示框显示的时间
@@ -130,7 +128,9 @@ export default {
 
     }
   },
-
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
 }
 </script>
 
