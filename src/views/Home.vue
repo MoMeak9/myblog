@@ -16,13 +16,18 @@
           <h1>最近文章</h1>
           <div v-if="loading">
             <v-skeleton-loader
-                v-for="item in 6" :key="item"
+                v-for="item in 4" :key="item"
                 type="card-heading,list-item-two-line@2"
             ></v-skeleton-loader>
           </div>
           <div v-else v-for="item in allArticles" :key="item.id">
             <articles-item :item="item"></articles-item>
           </div>
+          <v-pagination
+              v-model="queryPage"
+              @input="queryAllArticle"
+              :length="6"
+          ></v-pagination>
         </v-sheet>
       </v-col>
     </v-row>
@@ -40,7 +45,8 @@ export default {
     return {
       allArticles: [],
       classItem: [],
-      loading: true
+      loading: true,
+      queryPage: 1
     }
   },
   components: {
@@ -48,20 +54,23 @@ export default {
     classifyMenu
   },
   methods: {
-    queryAllArticle() {
+    queryAllArticle(num) {
       this.loading = true
-      queryAllArticle({}).then((res) => {
+      queryAllArticle({
+        queryPage: num
+      }).then((res) => {
         this.loading = false
         this.allArticles = res.data.allArticle
         this.classItem = res.data.classify
       })
       setTimeout(() => {
-        this.loading = false
-        this.$Message.error({
-          message: '加载失败',
-          time: 3000,
-          light: false,
-        })
+        if (this.loading === true) {
+          this.$Message.error({
+            message: '加载失败',
+            time: 3000,
+            light: false,
+          })
+        }
       }, 3000)
     }
   },

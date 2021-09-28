@@ -26,6 +26,10 @@ import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
+// Echarts
+import * as echarts from 'echarts';
+Vue.prototype.$echarts = echarts
+
 VueMarkdownEditor.use(createCopyCodePlugin());
 VueMarkdownEditor.use(createEmojiPlugin());
 VMdEditor.use(githubTheme, {
@@ -35,6 +39,7 @@ VueMarkdownEditor.use(githubTheme, {
     Hljs: hljs,
 });
 VueMarkdownEditor.use(createLineNumbertPlugin());
+
 
 Vue.use(VMdEditor);
 Vue.use(VueParticles)
